@@ -1,5 +1,7 @@
 import track from "../src/actions/track";
 import alias from "./actions/alias";
+import identify from "./actions/identify";
+import createUser from "./actions/peopleSet";
 class People {
   public userId;
   public apiKey;
@@ -17,15 +19,32 @@ class People {
       this.userId = aliasResult;
     }
   };
-  public set = async () => {};
-  public identify = async () => {};
+  public set = async (traits: any) => {
+    const userData = await createUser(this.apiKey, this.apiToken, traits);
+    if (userData) {
+      this.userId = userData.id;
+    }
+  };
+  public identify = async (parentId: string) => {
+    const identifiedUserId = await identify(
+      this.apiKey,
+      this.apiToken,
+      this.userId,
+      parentId
+    );
+    if (identifiedUserId) {
+      this.userId = identifiedUserId;
+    }
+  };
 }
 
-class InsighTracK {
+class InsighTrack {
   public people;
   public apiKey;
   public apiToken;
-  constructor() {
+  constructor(apiKey: string, apiToken: string) {
+    this.apiKey = apiKey;
+    this.apiToken = apiToken;
     this.people = new People();
     this.people.apiKey = this.apiKey;
     this.people.apiToken = this.apiToken;
@@ -40,4 +59,4 @@ class InsighTracK {
     ); // this will shoot an event
   };
 }
-export { InsighTracK };
+export { InsighTrack };

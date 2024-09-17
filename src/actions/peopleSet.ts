@@ -8,7 +8,7 @@ const createUser = async (apiKey: string, apiToken: string, traits: any) => {
     const authHeader = `Basic ${Buffer.from(`${apiKey}:${apiToken}`).toString(
       "base64"
     )}`;
-    const updatedUserData = await axios.put(
+    const userData = await axios.put(
       `${process.env.MAIN_API_URL}/users/api/create`,
       requestBody,
       {
@@ -18,10 +18,11 @@ const createUser = async (apiKey: string, apiToken: string, traits: any) => {
         },
       }
     );
-    console.log(`[Poeple Set }]`, updatedUserData);
-    return updatedUserData.data.id;
+    console.log(`[Poeple Set }]`, userData);
+    return userData?.data?.id;
   } catch (e) {
     console.error("Unable to set people", e);
     return null;
   }
 };
+export default createUser;

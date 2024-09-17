@@ -8,6 +8,9 @@
   "scripts": {
     "build": "tsup"
   },
+  "repository": {
+    "url":"https://github.com/dheerajGits/InsighTrack-SDK"
+  },
   "author": "dheeraj2002",
   "license": "MIT",
   "peerDependencies": {
